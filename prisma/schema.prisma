@@ -1,0 +1,115 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  password       String
+  name           String
+  role           String          @default("admin")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  passwordResets PasswordReset[]
+}
+
+model Service {
+  id               String   @id @default(uuid())
+  title            String
+  slug             String   @unique
+  shortDescription String
+  fullDescription  String?
+  icon             String?
+  order            Int      @default(0)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
+model Project {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  category   String
+  industry   String
+  challenge  String
+  solution   String
+  result     String
+  images     String?
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isFeatured, order])
+}
+
+model Testimonial {
+  id          String   @id @default(uuid())
+  clientName  String
+  company     String
+  designation String
+  review      String
+  rating      Int      @default(5)
+  photo       String?
+  isPublished Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, order])
+}
+
+model FAQ {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  service   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([isRead])
+}
+
+model SiteSetting {
+  key       String   @id @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model PasswordReset {
+  id        String   @id @default(uuid())
+  userId    String
+  tokenHash String
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
+}
+

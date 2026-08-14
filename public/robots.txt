@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adivyon.com/sitemap.xml
