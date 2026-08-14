@@ -12,6 +12,11 @@ export async function requireAdminAuth(request: Request): Promise<{ authorized: 
     }
 
     const payload = await verifyAccessToken(token);
+    
+    if (!payload) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const userId = payload.sub || payload.userId;
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
