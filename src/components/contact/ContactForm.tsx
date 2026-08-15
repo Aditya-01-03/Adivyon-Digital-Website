@@ -35,7 +35,9 @@ export function ContactForm() {
         toast('Message sent successfully!', 'success');
         setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
       } else {
-        throw new Error('Failed to send message');
+        const errorData = await res.json().catch(() => null);
+        const errorMsg = errorData?.error || 'Failed to send message';
+        throw new Error(errorMsg);
       }
     } catch (error) {
       toast('Failed to send message. Please try again.', 'error');

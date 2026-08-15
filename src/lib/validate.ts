@@ -15,7 +15,7 @@ export const contactFormSchema = z.object({
   phone: z.string().optional().transform(val => val ? val.trim() : val).refine(val => !val || noXss(val), 'Invalid characters'),
   company: z.string().optional().transform(val => val ? val.trim() : val).refine(val => !val || noXss(val), 'Invalid characters'),
   service: z.string().optional().transform(val => val ? val.trim() : val).refine(val => !val || noXss(val), 'Invalid characters'),
-  message: z.string().min(10).transform(val => val.trim()).refine(noXss, 'Invalid characters'),
+  message: z.string().min(2).transform(val => val.trim()).refine(noXss, 'Invalid characters'),
   website: z.string().max(0).optional(), // Honeypot
 });
 
