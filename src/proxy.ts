@@ -44,13 +44,22 @@ export async function proxy(request: NextRequest) {
 
   // CSRF validation for mutating API requests
   if (pathname.startsWith('/api') && isMutatingMethod(request.method)) {
-    // In production, allowedOrigins should be set properly.
     const allowedOrigins = [
       'http://localhost:3000',
       'https://localhost:3000',
-      process.env.NEXT_PUBLIC_SITE_URL || ''
+      process.env.NEXT_PUBLIC_SITE_URL || '',
     ].filter(Boolean);
     
+    // Also allow Vercel preview/production URLs dynamically
+    const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
+    const vercelProjectUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '';
+    if (vercelUrl) allowedOrigins.push(vercelUrl);
+    if (vercelProjectUrl) allowedOrigins.push(vercelProjectUrl);
+
+    // Also allow same-origin requests (origin matches the request host)
+    const requestOrigin = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
+    if (requestOrigin) allowedOrigins.push(requestOrigin);
+
     if (!validateOrigin(request, allowedOrigins)) {
       return NextResponse.json({ error: 'Invalid Origin' }, { status: 403 });
     }
