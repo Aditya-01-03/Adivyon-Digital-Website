@@ -3,6 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import { ToastProvider } from "@/components/ui/Toast";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-body' });
 const manrope = Manrope({ subsets: ["latin"], variable: '--font-heading' });
@@ -39,6 +40,7 @@ export default function RootLayout({
           <ConditionalLayout>
             {children}
           </ConditionalLayout>
+          <WhatsAppButton />
         </ToastProvider>
       </body>
     </html>

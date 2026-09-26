@@ -13,8 +13,28 @@ interface TestimonialData {
   rating: number;
 }
 
+const HARDCODED_TESTIMONIALS: TestimonialData[] = [
+  {
+    id: 'hardcoded-ritik-mori',
+    quote:
+      "We had no online presence at all before Adivyon — No logo, no real social media, nothing. They built it from scratch, and now customers actually find us online before they ever visit. If you run a nursery or agri-business and you're still invisible online, this is exactly the kind of gap they can fix.",
+    author: 'Ritik Mori',
+    role: 'Shreeram Nursery',
+    rating: 5,
+  },
+  {
+    id: 'hardcoded-ankit-kose',
+    quote:
+      "As a news and information company, video and content are our core product — but we didn't have the branding, online setup, or video production pipeline to produce at the pace or quality we needed. Adivyon built our logo, set up our online presence, and now handles our video production end-to-end. It freed us up to focus on the content itself instead of the production behind it.",
+    author: 'Ankit Kose',
+    role: 'Kheyti Talks',
+    rating: 5,
+  },
+];
+
 export function Testimonials() {
-  const [testimonials, setTestimonials] = useState<TestimonialData[]>([]);
+  const [testimonials, setTestimonials] =
+    useState<TestimonialData[]>(HARDCODED_TESTIMONIALS);
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -27,15 +47,24 @@ export function Testimonials() {
             id: t.id,
             quote: t.review,
             author: t.clientName,
-            role: `${t.designation || ''}${t.company ? ` at ${t.company}` : ''}`.trim() || 'Client',
+            role:
+              `${t.designation || ''}${t.company ? ` at ${t.company}` : ''}`.trim() ||
+              'Client',
             rating: t.rating || 5,
           }));
-          setTestimonials(mapped);
+          // Merge: hardcoded first, then API results (skip duplicates)
+          const hardcodedIds = new Set(
+            HARDCODED_TESTIMONIALS.map((ht) => ht.id)
+          );
+          const uniqueApi = mapped.filter(
+            (m: TestimonialData) => !hardcodedIds.has(m.id)
+          );
+          setTestimonials([...HARDCODED_TESTIMONIALS, ...uniqueApi]);
           setCurrent(0);
         }
       })
       .catch(() => {
-        // Fallback
+        setTestimonials(HARDCODED_TESTIMONIALS);
       });
   }, []);
 
@@ -47,22 +76,18 @@ export function Testimonials() {
     return () => clearInterval(timer);
   }, [testimonials.length, isHovered]);
 
-  if (testimonials.length === 0) {
-    return null;
-  }
-
   const active = testimonials[current] || testimonials[0];
 
   return (
     <section className="section-padding bg-accent-light" aria-roledescription="carousel">
       <div className="container-main">
-        <SectionHeading 
+        <SectionHeading
           badge="Testimonials"
           title="Client Success Stories"
         />
-        
-        <div 
-          className="max-w-4xl mx-auto mt-12 min-h-[16rem] flex items-center justify-center text-center"
+
+        <div
+          className="max-w-4xl mx-auto mt-12 min-h-[20rem] flex items-center justify-center text-center"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           aria-live="polite"
@@ -77,8 +102,8 @@ export function Testimonials() {
               className="flex flex-col items-center justify-center w-full"
             >
               <StarRating rating={active.rating} />
-              <p className="text-2xl md:text-3xl font-medium mt-6 mb-8 text-heading italic break-words line-clamp-4 max-w-full">
-                "{active.quote}"
+              <p className="text-xl md:text-2xl font-medium mt-6 mb-8 text-heading italic break-words max-w-full">
+                &ldquo;{active.quote}&rdquo;
               </p>
               <div>
                 <div className="font-bold text-lg">{active.author}</div>
@@ -87,7 +112,7 @@ export function Testimonials() {
             </motion.div>
           </AnimatePresence>
         </div>
-        
+
         {testimonials.length > 1 && (
           <div className="flex justify-center gap-2 mt-8">
             {testimonials.map((_, i) => (
