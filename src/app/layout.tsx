@@ -10,6 +10,19 @@ const manrope = Manrope({ subsets: ["latin"], variable: '--font-heading' });
 export const metadata: Metadata = {
   title: "Adivyon Digital",
   description: "Digital agency providing web development, marketing, and strategy.",
+  icons: {
+    icon: [
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  openGraph: {
+    title: 'Adivyon Digital',
+    description: 'Digital agency providing web development, marketing, and strategy.',
+    images: [{ url: '/og-icon.png', width: 512, height: 512 }],
+  },
 };
 
 export default function RootLayout({
