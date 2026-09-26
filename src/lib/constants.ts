@@ -13,9 +13,9 @@ export const NAV_LINKS = [
 ];
 
 export const SOCIAL_LINKS = [
-  { label: 'Twitter', href: 'https://twitter.com/adivyon', icon: 'twitter' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/adivyon', icon: 'linkedin' },
-  { label: 'Instagram', href: 'https://instagram.com/adivyon', icon: 'instagram' },
+  { label: 'Twitter', href: 'https://x.com/adivyondigital', icon: 'twitter' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/adivyondigital/', icon: 'linkedin' },
+  { label: 'Instagram', href: 'https://www.instagram.com/adivyondigital/?hl=en', icon: 'instagram' },
 ];
 
 export const COMPANY_INFO = {
