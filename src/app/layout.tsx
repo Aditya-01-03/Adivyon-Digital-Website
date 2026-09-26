@@ -10,9 +10,11 @@ const manrope = Manrope({ subsets: ["latin"], variable: '--font-heading' });
 export const metadata: Metadata = {
   title: "Adivyon Digital",
   description: "Digital agency providing web development, marketing, and strategy.",
+  manifest: '/site.webmanifest',
   icons: {
     icon: [
-      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
     ],
     apple: [
       { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
