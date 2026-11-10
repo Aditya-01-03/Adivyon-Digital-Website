@@ -11,14 +11,19 @@ export interface SectionHeadingProps {
 }
 
 export function SectionHeading({ badge, title, description, align = 'center', className }: SectionHeadingProps) {
+  const isDark = className?.includes('text-white');
   return (
     <div className={cn('max-w-3xl mb-12', {
       'mx-auto text-center': align === 'center',
       'ml-auto text-right': align === 'right',
       'text-left': align === 'left',
     }, className)}>
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words leading-tight tracking-tight">{title}</h2>
-      {description && <p className="text-lg text-body break-words">{description}</p>}
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words leading-tight tracking-tight text-inherit">{title}</h2>
+      {description && (
+        <p className={cn("text-lg break-words", isDark ? "text-white/80" : "text-body")}>
+          {description}
+        </p>
+      )}
     </div>
   );
 }

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import { ToastProvider } from "@/components/ui/Toast";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
-const inter = Inter({ subsets: ["latin"], variable: '--font-body' });
-const manrope = Manrope({ subsets: ["latin"], variable: '--font-heading' });
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.url),
   title: "Adivyon Digital",
   description: "Digital agency providing web development, marketing, and strategy.",
   manifest: '/site.webmanifest',
@@ -35,7 +34,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${manrope.variable} font-sans`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-body">
         <ToastProvider>
           <ConditionalLayout>
             {children}

@@ -41,7 +41,7 @@ export default function WhatsAppButton() {
           ${badgeVisible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-4 opacity-0 scale-95'}
         `}
       >
-        💬 Chat with us
+        Chat with us
       </span>
 
       {/* WhatsApp button */}

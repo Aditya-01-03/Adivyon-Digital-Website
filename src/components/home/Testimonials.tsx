@@ -79,7 +79,7 @@ export function Testimonials() {
   const active = testimonials[current] || testimonials[0];
 
   return (
-    <section className="section-padding bg-accent-light" aria-roledescription="carousel">
+    <section className="section-padding bg-[#FAFAF8] border-y border-border" aria-roledescription="carousel">
       <div className="container-main">
         <SectionHeading
           badge="Testimonials"

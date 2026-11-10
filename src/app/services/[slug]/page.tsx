@@ -3,16 +3,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { SERVICES_DATA, getServiceBySlug } from '@/lib/services-data';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { CTASection } from '@/components/home/CTASection';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
-import WebDevIllustration from '@/components/illustrations/WebDevIllustration';
-import MarketingIllustration from '@/components/illustrations/MarketingIllustration';
-import AIIllustration from '@/components/illustrations/AIIllustration';
-import BrandingIllustration from '@/components/illustrations/BrandingIllustration';
-import ContentIllustration from '@/components/illustrations/ContentIllustration';
-import StrategyIllustration from '@/components/illustrations/StrategyIllustration';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -30,29 +23,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!service) return {};
 
   return {
-    title: service.metaTitle,
+    title: `${service.title} | Strategic Services — Adivyon Digital`,
     description: service.metaDescription,
     openGraph: {
-      title: service.metaTitle,
+      title: `${service.title} | Adivyon Digital`,
       description: service.metaDescription,
-      url: `https://adivyon.com/services/${service.slug}`,
+      url: `https://adivyondigital.com/services/${service.slug}`,
       siteName: 'Adivyon Digital',
       type: 'website',
     },
   };
 }
-
-const getIllustration = (slug: string) => {
-  switch (slug) {
-    case 'website-development': return <WebDevIllustration />;
-    case 'digital-marketing': return <MarketingIllustration />;
-    case 'ai-automation': return <AIIllustration />;
-    case 'brand-identity': return <BrandingIllustration />;
-    case 'content-production': return <ContentIllustration />;
-    case 'business-strategy': return <StrategyIllustration />;
-    default: return null;
-  }
-};
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
@@ -63,94 +44,156 @@ export default async function ServiceDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen text-gray-900">
       {/* Top Breadcrumb & Hero */}
-      <section className="bg-surface py-12 md:py-20 border-b border-border">
-        <div className="container-main max-w-5xl">
+      <section className="bg-gray-50 py-12 sm:py-20 border-b border-gray-200">
+        <div className="container-main max-w-5xl px-4 sm:px-6">
           {/* Breadcrumb / Back link */}
-          <div className="mb-8">
+          <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#1E6F43] hover:underline transition-colors"
             >
-              <svg className="w-4 h-4 transform rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg className="w-4 h-4 transform rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
-              Back to Services
+              <span>Back to All Capabilities</span>
             </Link>
-          </div>
+          </nav>
 
-          <div className="grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-8">
-              <Badge variant="outline" className="mb-4 text-primary border-primary bg-primary/5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-8 space-y-4">
+              <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 text-[#1E6F43] border border-emerald-200 text-xs font-semibold uppercase tracking-wider">
                 {service.title}
-              </Badge>
-              <h1 className="text-3xl md:text-5xl font-bold mb-6 text-heading leading-tight break-words">
+              </span>
+              <h1 className="text-3xl sm:text-5xl font-black font-heading text-gray-900 leading-[1.15] tracking-tight">
                 {service.headline}
               </h1>
-              <p className="text-lg md:text-xl text-body break-words leading-relaxed">
+              <p className="text-base sm:text-xl text-gray-700 leading-relaxed font-normal pt-1">
                 {service.body}
               </p>
             </div>
 
-            <div className="md:col-span-4 flex justify-center">
-              <div className="w-48 h-48 md:w-56 md:h-56 p-6 rounded-2xl bg-accent-light border border-accent/20 flex items-center justify-center shadow-sm">
-                {getIllustration(service.slug)}
+            {/* Structured Practice Card (No cartoon illustrations) */}
+            <div className="lg:col-span-4 w-full">
+              <div className="rounded-2xl bg-white border border-gray-200 p-6 sm:p-7 shadow-xs space-y-5">
+                <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    Practice Profile
+                  </span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#1E6F43]" />
+                </div>
+
+                <div className="space-y-3.5 text-sm">
+                  <div>
+                    <span className="text-xs text-gray-500 block font-medium">Deliverables</span>
+                    <span className="font-bold text-gray-900">{service.included.length} Core Deliverables</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-gray-500 block font-medium">Delivery Model</span>
+                    <span className="font-bold text-gray-900">Direct In-House Execution</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-gray-500 block font-medium">Primary Goal</span>
+                    <span className="font-bold text-gray-900">Verifiable Commercial Impact</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Link
+                    href="/contact"
+                    className="block w-full py-3 px-4 text-center rounded-xl bg-[#1E6F43] hover:bg-[#0F3D2E] text-white font-bold text-sm transition-colors shadow-xs"
+                  >
+                    Consult on {service.title} &rarr;
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What's Included */}
-      <section className="section-padding bg-white">
-        <div className="container-main max-w-5xl">
-          <ScrollReveal direction="up">
-            <div className="mb-10">
-              <Badge variant="outline" className="mb-3 text-primary border-primary bg-primary/5">
-                Deliverables
-              </Badge>
-              <h2 className="text-3xl font-bold text-heading break-words">What's Included</h2>
-            </div>
-          </ScrollReveal>
+      {/* Deliverables / What's Included */}
+      <section className="py-14 sm:py-20 bg-white border-b border-gray-200">
+        <div className="container-main max-w-5xl px-4 sm:px-6">
+          <div className="mb-10 sm:mb-12">
+            <span className="text-xs font-bold text-[#1E6F43] uppercase tracking-wider block mb-2">
+              Deliverables
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold font-heading text-gray-900 tracking-tight">
+              What We Deliver
+            </h2>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {service.included.map((item, index) => (
-              <ScrollReveal key={index} delay={index * 0.1} direction="up">
-                <Card className="h-full p-6 flex items-start gap-4 hover:border-primary/50 transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5 font-bold">
-                    ✓
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {service.included.map((item, index) => {
+              const num = (index + 1).toString().padStart(2, '0');
+              return (
+                <div
+                  key={index}
+                  className="p-6 bg-gray-50 border border-gray-200 rounded-xl flex items-start gap-4 hover:border-[#1E6F43] transition-colors"
+                >
+                  <span className="font-mono text-xs font-bold text-[#1E6F43] px-2 py-1 rounded bg-emerald-50 border border-emerald-200 shrink-0 mt-0.5">
+                    {num}
+                  </span>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-heading break-words">{item}</h3>
+                    <h3 className="text-base sm:text-lg font-bold font-heading text-gray-900">
+                      {item}
+                    </h3>
                   </div>
-                </Card>
-              </ScrollReveal>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Who This Is For */}
-      <section className="section-padding bg-surface border-t border-border">
-        <div className="container-main max-w-5xl">
-          <ScrollReveal direction="up">
-            <Card padding="lg" className="bg-white border-l-4 border-l-primary shadow-sm">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-12 h-12 rounded-xl bg-dark-green text-white flex items-center justify-center shrink-0">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-heading mb-3 break-words">Who This Is For</h2>
-                  <p className="text-lg text-body break-words leading-relaxed">
-                    {service.whoItsFor}
-                  </p>
-                </div>
+      <section className="py-14 sm:py-20 bg-gray-50 border-b border-gray-200">
+        <div className="container-main max-w-5xl px-4 sm:px-6">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-xs">
+            <div className="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
+              <div className="w-12 h-12 rounded-xl bg-[#0F3D2E] text-white flex items-center justify-center shrink-0">
+                <svg className="w-6 h-6 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
-            </Card>
-          </ScrollReveal>
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-bold font-heading text-gray-900">
+                  Ideal Collaboration Fit
+                </h2>
+                <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-normal">
+                  {service.whoItsFor}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contextual Link to Real-World Impact Stories */}
+      <section className="py-12 sm:py-16 bg-white border-b border-gray-200">
+        <div className="container-main max-w-5xl px-4 sm:px-6">
+          <div className="p-6 sm:p-8 rounded-2xl bg-[#0F3D2E] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-300">
+                Real-World Applications
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold font-heading !text-white text-white">
+                See these capabilities delivered on the ground.
+              </h3>
+              <p className="text-sm text-gray-200 leading-relaxed">
+                Explore how we combined engineering, documentary storytelling, and brand systems for agricultural enterprises and grassroots organizations across India.
+              </p>
+            </div>
+            <Link
+              href="/impact-stories"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-[#0F3D2E] hover:bg-gray-100 font-bold text-sm shrink-0 transition-colors shadow-sm"
+            >
+              <span>Explore Impact Stories</span>
+              <span>&rarr;</span>
+            </Link>
+          </div>
         </div>
       </section>
 

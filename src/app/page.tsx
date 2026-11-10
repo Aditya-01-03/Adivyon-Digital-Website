@@ -2,21 +2,25 @@ import React from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Adivyon Digital | Digital Growth Partner for Ambitious Businesses',
-  description: 'We help businesses grow with custom web development, digital marketing, AI automation, brand identity, content production, and strategic consulting. Based in Bhopal, serving globally.',
+  title: 'Adivyon Digital | Strategic Communications, Technology & Growth',
+  description:
+    'We partner with ambitious enterprises, agricultural innovators, and grassroots organisations across India to deliver custom web engineering, brand identity, and documentary storytelling.',
   openGraph: {
-    title: 'Adivyon Digital | Digital Growth Partner',
-    description: 'Custom web development, digital marketing, AI automation & strategic consulting.',
+    title: 'Adivyon Digital | Strategic Communications, Technology & Growth',
+    description:
+      'Custom web development, documentary storytelling, brand identity & strategic consulting.',
     url: 'https://adivyondigital.com',
   },
 };
+
 import { HeroSection } from '@/components/home/HeroSection';
 import { TrustStats } from '@/components/home/TrustStats';
+import { ClientLogos } from '@/components/home/ClientLogos';
 import { GrowthEcosystem } from '@/components/home/GrowthEcosystem';
+import { ImpactFeature } from '@/components/home/ImpactFeature';
 import { ServicesGrid } from '@/components/home/ServicesGrid';
 import { WhyAdivyon } from '@/components/home/WhyAdivyon';
 import { ProcessTimeline } from '@/components/home/ProcessTimeline';
-import { FeaturedWork } from '@/components/home/FeaturedWork';
 import { Industries } from '@/components/home/Industries';
 import { Testimonials } from '@/components/home/Testimonials';
 import { FAQ } from '@/components/home/FAQ';
@@ -27,11 +31,12 @@ export default function Home() {
     <>
       <HeroSection />
       <TrustStats />
+      <ClientLogos />
       <GrowthEcosystem />
+      <ImpactFeature />
       <ServicesGrid />
       <WhyAdivyon />
       <ProcessTimeline />
-      <FeaturedWork />
       <Industries />
       <Testimonials />
       <FAQ />

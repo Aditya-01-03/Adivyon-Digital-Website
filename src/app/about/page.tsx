@@ -10,6 +10,7 @@ import { OurStory } from '@/components/about/OurStory';
 import { MissionVision } from '@/components/about/MissionVision';
 import { CoreValues } from '@/components/about/CoreValues';
 import { TeamGrid } from '@/components/about/TeamGrid';
+import { ClientLogos } from '@/components/home/ClientLogos';
 import { CTASection } from '@/components/home/CTASection';
 
 export default function AboutPage() {
@@ -18,6 +19,7 @@ export default function AboutPage() {
       <AboutHero />
       <OurStory />
       <MissionVision />
+      <ClientLogos />
       <CoreValues />
       <TeamGrid />
       <CTASection />
